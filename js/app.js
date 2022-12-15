@@ -48,6 +48,8 @@ function getMovieData(event) {
       })
       .then(function (huh) {
         console.log(huh);
+        var test = 'test';
+        console.log(test);
       });
 
 
