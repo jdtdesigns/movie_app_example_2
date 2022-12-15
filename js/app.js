@@ -6,10 +6,10 @@ function displayMatches(matches) {
 
   for (var matchObj of matches) {
     itemWrapper.insertAdjacentHTML('beforeend', `
-      <div class="movie-item" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${matchObj.image_url})">
-        <h3>${matchObj.title}</h3>
-        <p>${matchObj.description}</p>
-        <a href="${matchObj.imdb_url}" target="_blank">View More Details</a>
+      <div class="movie-item" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${matchObj.Poster})">
+        <h3>${matchObj.Title}</h3>
+        <p>Release Year: ${matchObj.Year}</p>
+        <a href="https://www.imdb.com/title/${matchObj.imdbID}" target="_blank">View More Details</a>
       </div>
     `);
   }
@@ -20,21 +20,7 @@ function getMovieData(event) {
   var searchText = searchInput.value.trim().toLowerCase();
 
   if (keyCode === 13 && searchText) {
-    var matches = [];
-
-    for (var movie of movieData) {
-      if (movie.title.toLowerCase().includes(searchText)) {
-        matches.push(movie);
-      }
-    }
-
-
-    // fetch('https://www.omdbapi.com/?apikey=20dc4c7f&t=drive')
-    //   .then(function(responseObj) {
-
-    //   });
-
-    var responsePromise = fetch('https://www.omdbapi.com/?apikey=20dc4c7f&t=drive');
+    var responsePromise = fetch(`https://www.omdbapi.com/?apikey=20dc4c7f&s=${searchText}`);
 
     function handleResponse(responseObj) {
       return responseObj.json();
@@ -43,25 +29,8 @@ function getMovieData(event) {
     responsePromise
       .then(handleResponse)
       .then(function (data) {
-        console.log(data);
-        return 'this is cool';
-      })
-      .then(function (huh) {
-        console.log(huh);
-        var test = 'test';
-        console.log(test);
+        displayMatches(data.Search);
       });
-
-
-    // responsePromise.then(function (responseObj) {
-    //   var dataPromise = responseObj.json();
-
-    //   dataPromise.then(function (data) {
-    //     console.log(data);
-    //   });
-    // });
-
-    displayMatches(matches);
   }
 }
 
@@ -70,32 +39,3 @@ function init() {
 }
 
 init();
-
-// Grab html elements
-// Get the input's value on enter key press
-// Grab data related to user's search
-// Inject the movie items into the DOM, based on user's search
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
