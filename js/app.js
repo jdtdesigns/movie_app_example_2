@@ -3,7 +3,7 @@ var itemWrapper = document.querySelector('main');
 
 function displayMatches(matches) {
   itemWrapper.innerHTML = '';
-
+  console.log('test');
   if (!matches) {
     itemWrapper.innerHTML = '<p class="no-search">No results found.</p>';
   } else {
